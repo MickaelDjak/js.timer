@@ -6,7 +6,23 @@ export default class TimeForm extends Component {
     project: "Project"
   };
 
-  updateInput = event => {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: props.title,
+      project: props.project
+    };
+  }
+
+  confirmUpdate = () => {
+    this.props.updateData({
+      title: this.state.title,
+      project: this.state.project
+    });
+  };
+
+  updateField = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -19,7 +35,7 @@ export default class TimeForm extends Component {
           id="title"
           placeholder="Your title"
           name="title"
-          onChange={this.updateInput}
+          onChange={this.updateField}
           value={this.state.title}
         />
         <label htmlFor="project">Project</label>
@@ -28,12 +44,19 @@ export default class TimeForm extends Component {
           id="project"
           placeholder="Your project"
           name="project"
-          onChange={this.updateInput}
+          onChange={this.updateField}
           value={this.state.project}
         />
         <div>
-          <button className="btn btn-db btn-well">Update</button>
-          <button className="btn btn-db btn-cancel">Cancel</button>
+          <button className="btn btn-db btn-well" onClick={this.confirmUpdate}>
+            Update
+          </button>
+          <button
+            className="btn btn-db btn-cancel"
+            onClick={this.props.switchTo}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     );
