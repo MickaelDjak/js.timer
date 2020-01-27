@@ -1,4 +1,96 @@
-.App {
+.TimersDashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   font-family: sans-serif;
   text-align: center;
+  width: 400px;
+  margin: auto;
+}
+
+.EditableTimerList {
+  display: flex;
+  flex-direction: column;
+}
+
+.Timer,
+.TimeForm {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.TimeForm label {
+  align-self: flex-start;
+  margin: 10px 20px 5px;
+  font-size: 1.25em;
+}
+
+.TimeForm input {
+  margin: 0 20px 15px;
+  font-size: 1.25em;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 5px 8px;
+}
+
+.Timer h2 {
+  margin: 10px 20px 5px;
+  align-self: flex-start;
+}
+.Timer .control-paned {
+  align-self: flex-end;
+  margin: 0px 20px;
+}
+.Timer .control-paned i {
+  padding: 5px;
+}
+
+.Timer p {
+  margin: 0px 20px;
+  align-self: flex-start;
+}
+
+.Timer span {
+  font-size: 2em;
+  color: #212121;
+  margin: 20px 0;
+}
+
+.TimerCreator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+button.btn {
+  border: 2px blue solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  width: 90%;
+}
+
+button.btn-db {
+  width: 45%;
+}
+
+button.btn-well {
+  border-color: rgb(9, 235, 9);
+  color: rgb(9, 235, 9);
+}
+
+button.btn-cancel {
+  border-color: red;
+  color: red;
 }
