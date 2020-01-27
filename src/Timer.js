@@ -8,7 +8,7 @@ export default function Timer(props) {
       <span>10:10:20</span>
       <div className="control-paned">
         <i className="fa fa-2x fa-edit" onClick={props.switchTo} />
-        <i className="fa fa-2x fa-trash" />
+        <i className="fa fa-2x fa-trash" onClick={props.deleteTimer} />
       </div>
       <div>
         <button className="btn ">Start</button>

@@ -3,34 +3,29 @@ import TimeForm from "./TimeForm";
 import Timer from "./Timer";
 
 export default class EditableTimer extends Component {
-  state = {
-    isEditing: false,
-    title: "Title",
-    project: "Project"
+  toggleForm = () => {
+    this.props.switchTo(this.props.id);
   };
 
-  switchTo = () => {
-    this.setState({ isEditing: !this.state.isEditing });
-  };
-
-  updateData = data => {
-    this.setState({
-      ...data,
-      isEditing: false
-    });
+  deleteTimer = () => {
+    this.props.delete(this.props.id);
   };
 
   render() {
     return (
       <div className="EditableTimer ">
-        {this.state.isEditing ? (
+        {this.props.isEditing ? (
           <TimeForm
-            {...this.state}
-            switchTo={this.switchTo}
-            updateData={this.updateData}
+            {...this.props}
+            switchTo={this.toggleForm}
+            updateData={this.props.updateData}
           />
         ) : (
-          <Timer {...this.state} switchTo={this.switchTo} />
+          <Timer
+            {...this.props}
+            switchTo={this.toggleForm}
+            deleteTimer={this.deleteTimer}
+          />
         )}
       </div>
     );

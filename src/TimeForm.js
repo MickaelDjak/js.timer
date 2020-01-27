@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 
 export default class TimeForm extends Component {
-  state = {
-    title: "Title",
-    project: "Project"
-  };
-
   constructor(props) {
     super(props);
 
@@ -16,7 +11,7 @@ export default class TimeForm extends Component {
   }
 
   confirmUpdate = () => {
-    this.props.updateData({
+    this.props.updateData(this.props.id, {
       title: this.state.title,
       project: this.state.project
     });
