@@ -9,13 +9,17 @@ export default class TimersDashboard extends Component {
         id: 0,
         title: "Title",
         project: "Project",
-        isEditing: true
+        isEditing: true,
+        elapsed: "123123",
+        runningSince: null
       },
       {
         id: 1,
         title: "Test",
         project: "Project number 2",
-        isEditing: false
+        isEditing: false,
+        elapsed: "12333",
+        runningSince: "16532112"
       }
     ]
   };
