@@ -19,6 +19,7 @@
   border: 1px solid black;
   border-radius: 5px;
   margin: 5px 0;
+  padding: 10px 0 15px;
   display: flex;
   flex-direction: column;
 }
@@ -90,6 +91,7 @@ button.btn {
   font-size: 1.25em;
   border: 2px blue solid;
   color: blue;
+  background: rgb(0, 0, 255, 0.125);
   border-radius: 5px;
   padding: 10px 20px;
   margin: 5px;
@@ -103,14 +105,17 @@ button.btn-db {
 button.btn-well {
   border-color: rgb(9, 235, 9);
   color: rgb(9, 235, 9);
+  background: rgb(9, 235, 9, 0.125);
 }
 
 button.btn-cancel {
   border-color: red;
   color: red;
+  background: rgb(255, 0, 0, 0.125);
 }
 
 button.btn-create {
   border-color: purple;
   color: purple;
+  background: rgb(255, 0, 255, 0.125);
 }
