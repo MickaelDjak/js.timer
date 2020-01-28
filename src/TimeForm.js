@@ -4,14 +4,16 @@ export default class TimeForm extends Component {
   constructor(props) {
     super(props);
 
+    const { title = "new title", project = "new project" } = props;
+
     this.state = {
-      title: props.title,
-      project: props.project
+      title: title,
+      project: project
     };
   }
 
   confirmUpdate = () => {
-    this.props.updateData(this.props.id, {
+    this.props.handleConfirm({
       title: this.state.title,
       project: this.state.project
     });
@@ -44,7 +46,7 @@ export default class TimeForm extends Component {
         />
         <div>
           <button className="btn btn-db btn-well" onClick={this.confirmUpdate}>
-            Update
+            {this.props.statu === "update" ? "Update" : "Create"}
           </button>
           <button
             className="btn btn-db btn-cancel"

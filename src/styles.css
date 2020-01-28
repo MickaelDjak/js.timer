@@ -49,35 +49,47 @@
   padding: 5px;
 }
 
-.Timer p {
-  margin: 0px 20px;
+.Timer .Timer-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Timer .Timer-name-panel {
+  margin-left: 20px;
+  margin-top: 10px;
+
   align-self: flex-start;
 }
 
-.Timer span {
-  font-size: 2em;
-  color: #212121;
-  margin: 20px 0;
+.Timer .Timer-name-panel p {
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
-.TimerCreator button {
+.Timer .Timer-control-panel {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-self: center;
-  border: 1px solid black;
-  border-radius: 5px;
-  text-align: center;
-  vertical-align: center;
-  margin: auto;
-  padding: 10px;
-  font-size: 1.25em;
-  height: 60px;
-  background: transparent;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.Timer .Timer-control-panel i {
+  margin: 5px;
+  font-size: 1.5em;
+}
+
+.Timer span {
+  font-size: 3em;
+  color: #212121;
+  margin: 10px 0 20px;
 }
 
 button.btn {
+  font-size: 1.25em;
   border: 2px blue solid;
+  color: blue;
   border-radius: 5px;
   padding: 10px 20px;
   margin: 5px;
@@ -96,4 +108,9 @@ button.btn-well {
 button.btn-cancel {
   border-color: red;
   color: red;
+}
+
+button.btn-create {
+  border-color: purple;
+  color: purple;
 }

@@ -6,30 +6,18 @@ export default class TimersDashboard extends Component {
   state = {
     timers: [
       {
-        id: 100,
+        id: 0,
         title: "Title",
         project: "Project",
         isEditing: true
       },
       {
-        id: 20,
+        id: 1,
         title: "Test",
         project: "Project number 2",
         isEditing: false
       }
     ]
-  };
-
-  updateData = (id, data) => {
-    let index = this.state.timers.findIndex(el => el.id === id);
-
-    this.setState({
-      timers: [
-        ...this.state.timers.slice(0, index),
-        { ...this.state.timers[index], ...data, isEditing: false },
-        ...this.state.timers.slice(index + 1)
-      ]
-    });
   };
 
   switchTo = id => {
@@ -47,6 +35,18 @@ export default class TimersDashboard extends Component {
     });
   };
 
+  update = (id, data) => {
+    let index = this.state.timers.findIndex(el => el.id === id);
+
+    this.setState({
+      timers: [
+        ...this.state.timers.slice(0, index),
+        { ...this.state.timers[index], ...data, isEditing: false },
+        ...this.state.timers.slice(index + 1)
+      ]
+    });
+  };
+
   delete = id => {
     let index = this.state.timers.findIndex(el => el.id === id);
 
@@ -58,17 +58,32 @@ export default class TimersDashboard extends Component {
     });
   };
 
+  creat = data => {
+    this.setState({
+      timers: [
+        ...this.state.timers,
+        {
+          id: this.state.timers.length,
+          title: "Title",
+          project: "Project",
+          isEditing: false,
+          ...data
+        }
+      ]
+    });
+  };
+
   render() {
     return (
       <div className="TimersDashboard">
         <h1>Timers bashboard</h1>
         <EditableTimerList
           timers={this.state.timers}
-          updateData={this.updateData}
+          updateData={this.update}
           switchTo={this.switchTo}
           delete={this.delete}
         />
-        <TimerCreator />
+        <TimerCreator creat={this.creat} />
       </div>
     );
   }
