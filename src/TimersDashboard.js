@@ -10,9 +10,9 @@ export default class TimersDashboard extends Component {
         id: uuidv4(),
         title: "Learn",
         project: "Java script",
-        isEditing: true,
+        isEditing: false,
         elapsed: 22,
-        runningSince: null
+        runningSince: Date.now()
       },
       {
         id: uuidv4(),
@@ -21,6 +21,22 @@ export default class TimersDashboard extends Component {
         isEditing: false,
         elapsed: 120,
         runningSince: Date.now()
+      },
+      {
+        id: uuidv4(),
+        title: "Learn",
+        project: "Redux",
+        isEditing: false,
+        elapsed: 120,
+        runningSince: null
+      },
+      {
+        id: uuidv4(),
+        title: "Learn",
+        project: "GraphQL",
+        isEditing: true,
+        elapsed: 120,
+        runningSince: null
       }
     ]
   };
@@ -114,7 +130,6 @@ export default class TimersDashboard extends Component {
   };
 
   render() {
-    console.log(this.state.timers);
     return (
       <div className="TimersDashboard">
         <h1>Timers bashboard</h1>

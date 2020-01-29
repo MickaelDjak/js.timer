@@ -18,11 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-
-    "go": "open http://localhost:3000; npm run server",
-
-    "server": "babel-node server.js"
+    "eject": "react-scripts eject"
   },
   "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }
