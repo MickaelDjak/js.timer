@@ -1,31 +1,36 @@
 import React, { Component } from "react";
 import TimerCreator from "./TimerCreator";
 import EditableTimerList from "./EditableTimerList";
+const uuidv4 = require("uuid/v4");
 
 export default class TimersDashboard extends Component {
   state = {
     timers: [
       {
-        id: 0,
-        title: "Title",
-        project: "Project",
+        id: uuidv4(),
+        title: "Learn",
+        project: "Java script",
         isEditing: true,
-        elapsed: "123123",
+        elapsed: 22,
         runningSince: null
       },
       {
-        id: 1,
-        title: "Test",
-        project: "Project number 2",
+        id: uuidv4(),
+        title: "Learn",
+        project: "React",
         isEditing: false,
-        elapsed: "12333",
-        runningSince: "16532112"
+        elapsed: 120,
+        runningSince: Date.now()
       }
     ]
   };
 
+  getIndexById(id) {
+    return this.state.timers.findIndex(el => el.id === id);
+  }
+
   switchTo = id => {
-    let index = this.state.timers.findIndex(el => el.id === id);
+    const index = this.getIndexById(id);
 
     this.setState({
       timers: [
@@ -40,7 +45,7 @@ export default class TimersDashboard extends Component {
   };
 
   update = (id, data) => {
-    let index = this.state.timers.findIndex(el => el.id === id);
+    const index = this.getIndexById(id);
 
     this.setState({
       timers: [
@@ -52,7 +57,7 @@ export default class TimersDashboard extends Component {
   };
 
   delete = id => {
-    let index = this.state.timers.findIndex(el => el.id === id);
+    const index = this.getIndexById(id);
 
     this.setState({
       timers: [
@@ -67,17 +72,49 @@ export default class TimersDashboard extends Component {
       timers: [
         ...this.state.timers,
         {
-          id: this.state.timers.length,
+          id: uuidv4(),
           title: "Title",
           project: "Project",
           isEditing: false,
+          elapsed: 0,
+          runningSince: null,
           ...data
         }
       ]
     });
   };
 
+  start = id => {
+    const index = this.getIndexById(id);
+
+    this.setState({
+      timers: [
+        ...this.state.timers.slice(0, index),
+        { ...this.state.timers[index], runningSince: new Date() },
+        ...this.state.timers.slice(index + 1)
+      ]
+    });
+  };
+
+  stop = id => {
+    const index = this.getIndexById(id);
+    const elapsedNow = new Date() - this.state.timers[index].runningSince;
+
+    this.setState({
+      timers: [
+        ...this.state.timers.slice(0, index),
+        {
+          ...this.state.timers[index],
+          runningSince: null,
+          elapsed: this.state.timers[index].elapsed + elapsedNow
+        },
+        ...this.state.timers.slice(index + 1)
+      ]
+    });
+  };
+
   render() {
+    console.log(this.state.timers);
     return (
       <div className="TimersDashboard">
         <h1>Timers bashboard</h1>
@@ -86,6 +123,8 @@ export default class TimersDashboard extends Component {
           updateData={this.update}
           switchTo={this.switchTo}
           delete={this.delete}
+          start={this.start}
+          stop={this.stop}
         />
         <TimerCreator creat={this.creat} />
       </div>

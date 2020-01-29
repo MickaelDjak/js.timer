@@ -11,6 +11,14 @@ export default class EditableTimer extends Component {
     this.props.delete(this.props.id);
   };
 
+  stopTimer = () => {
+    this.props.stop(this.props.id);
+  };
+
+  startTimer = () => {
+    this.props.start(this.props.id);
+  };
+
   confirmUpdate = data => {
     this.props.updateData(this.props.id, data);
   };
@@ -30,6 +38,8 @@ export default class EditableTimer extends Component {
             {...this.props}
             switchTo={this.toggleForm}
             deleteTimer={this.deleteTimer}
+            stopTimer={this.stopTimer}
+            startTimer={this.startTimer}
           />
         )}
       </div>

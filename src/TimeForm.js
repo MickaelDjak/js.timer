@@ -45,7 +45,10 @@ export default class TimeForm extends Component {
           value={this.state.project}
         />
         <div>
-          <button className="btn btn-db btn-well" onClick={this.confirmUpdate}>
+          <button
+            className="btn btn-db btn-update"
+            onClick={this.confirmUpdate}
+          >
             {this.props.statu === "update" ? "Update" : "Create"}
           </button>
           <button

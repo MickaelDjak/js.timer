@@ -102,16 +102,28 @@ button.btn-db {
   width: 45%;
 }
 
-button.btn-well {
+button.btn-start {
   border-color: rgb(9, 235, 9);
   color: rgb(9, 235, 9);
   background: rgb(9, 235, 9, 0.125);
 }
 
-button.btn-cancel {
+button.btn-stop {
   border-color: red;
   color: red;
   background: rgb(255, 0, 0, 0.125);
+}
+
+button.btn-update {
+  border-color: rgb(235, 201, 9);
+  color: rgb(235, 201, 9);
+  background: rgb(235, 201, 9, 0.125);
+}
+
+button.btn-cancel {
+  border-color: black;
+  color: black;
+  background: rgb(0, 0, 0, 0.125);
 }
 
 button.btn-create {
