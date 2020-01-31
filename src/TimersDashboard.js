@@ -3,43 +3,31 @@ import TimerCreator from "./TimerCreator";
 import EditableTimerList from "./EditableTimerList";
 const uuidv4 = require("uuid/v4");
 
+/**
+ * https://github.com/krishl/fullstack-react
+ */
 export default class TimersDashboard extends Component {
+  serverUrl = "https://6b5bi.sse.codesandbox.io/api/timers";
+
   state = {
-    timers: [
-      {
-        id: uuidv4(),
-        title: "Learn",
-        project: "Java script",
-        isEditing: false,
-        elapsed: 22,
-        runningSince: Date.now()
-      },
-      {
-        id: uuidv4(),
-        title: "Learn",
-        project: "React",
-        isEditing: false,
-        elapsed: 120,
-        runningSince: Date.now()
-      },
-      {
-        id: uuidv4(),
-        title: "Learn",
-        project: "Redux",
-        isEditing: false,
-        elapsed: 120,
-        runningSince: null
-      },
-      {
-        id: uuidv4(),
-        title: "Learn",
-        project: "GraphQL",
-        isEditing: true,
-        elapsed: 120,
-        runningSince: null
-      }
-    ]
+    timers: []
   };
+
+  componentDidMount() {
+    setInterval(() => {
+      return fetch(this.serverUrl, {
+        headers: {
+          Accept: "application/json"
+        }
+      })
+        .then(response => response.json())
+        .then(serverTimers => {
+          this.setState({
+            timers: serverTimers
+          });
+        });
+    }, 1000);
+  }
 
   getIndexById(id) {
     return this.state.timers.findIndex(el => el.id === id);
