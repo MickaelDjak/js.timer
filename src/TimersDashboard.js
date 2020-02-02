@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import uuidv4 from "uuid/v4";
 import TimerCreator from "./TimerCreator";
 import EditableTimerList from "./EditableTimerList";
-const uuidv4 = require("uuid/v4");
+import * as client from "./client";
 
 /**
  * https://github.com/krishl/fullstack-react
@@ -15,17 +16,11 @@ export default class TimersDashboard extends Component {
 
   componentDidMount() {
     setInterval(() => {
-      return fetch(this.serverUrl, {
-        headers: {
-          Accept: "application/json"
-        }
-      })
-        .then(response => response.json())
-        .then(serverTimers => {
-          this.setState({
-            timers: serverTimers
-          });
+      return client.getTimers(serverTimers => {
+        this.setState({
+          timers: serverTimers
         });
+      });
     }, 1000);
   }
 
@@ -33,28 +28,20 @@ export default class TimersDashboard extends Component {
     return this.state.timers.findIndex(el => el.id === id);
   }
 
-  switchTo = id => {
-    const index = this.getIndexById(id);
-
-    this.setState({
-      timers: [
-        ...this.state.timers.slice(0, index),
-        {
-          ...this.state.timers[index],
-          isEditing: !this.state.timers[index].isEditing
-        },
-        ...this.state.timers.slice(index + 1)
-      ]
-    });
-  };
-
   update = (id, data) => {
     const index = this.getIndexById(id);
 
+    const updatedTimer = {
+      ...this.state.timers[index],
+      ...data
+    };
+
+    client.updateTimer(updatedTimer);
+
     this.setState({
       timers: [
         ...this.state.timers.slice(0, index),
-        { ...this.state.timers[index], ...data, isEditing: false },
+        updatedTimer,
         ...this.state.timers.slice(index + 1)
       ]
     });
@@ -63,6 +50,7 @@ export default class TimersDashboard extends Component {
   delete = id => {
     const index = this.getIndexById(id);
 
+    client.deleteTimer(id);
     this.setState({
       timers: [
         ...this.state.timers.slice(0, index),
@@ -72,23 +60,25 @@ export default class TimersDashboard extends Component {
   };
 
   creat = data => {
+    const timer = {
+      id: uuidv4(),
+      title: "Title",
+      project: "Project",
+      isEditing: false,
+      elapsed: 0,
+      runningSince: null,
+      ...data
+    };
+
+    client.createTimer(timer);
+
     this.setState({
-      timers: [
-        ...this.state.timers,
-        {
-          id: uuidv4(),
-          title: "Title",
-          project: "Project",
-          isEditing: false,
-          elapsed: 0,
-          runningSince: null,
-          ...data
-        }
-      ]
+      timers: [...this.state.timers, timer]
     });
   };
 
   start = id => {
+    client.startTimer(id);
     const index = this.getIndexById(id);
 
     this.setState({
@@ -103,6 +93,8 @@ export default class TimersDashboard extends Component {
   stop = id => {
     const index = this.getIndexById(id);
     const elapsedNow = new Date() - this.state.timers[index].runningSince;
+
+    client.stopTimer(id, elapsedNow);
 
     this.setState({
       timers: [
@@ -124,7 +116,6 @@ export default class TimersDashboard extends Component {
         <EditableTimerList
           timers={this.state.timers}
           updateData={this.update}
-          switchTo={this.switchTo}
           delete={this.delete}
           start={this.start}
           stop={this.stop}

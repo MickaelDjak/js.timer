@@ -10,7 +10,6 @@ export default function EditableTimerList(props) {
             key={timer.id}
             {...timer}
             updateData={props.updateData}
-            switchTo={props.switchTo}
             delete={props.delete}
             start={props.start}
             stop={props.stop}

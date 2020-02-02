@@ -3,8 +3,16 @@ import TimeForm from "./TimeForm";
 import Timer from "./Timer";
 
 export default class EditableTimer extends Component {
+  state = {
+    isEditing: false
+  };
+
   toggleForm = () => {
-    this.props.switchTo(this.props.id);
+    this.setState(({ isEditing }) => {
+      return {
+        isEditing: !isEditing
+      };
+    });
   };
 
   deleteTimer = () => {
@@ -20,13 +28,14 @@ export default class EditableTimer extends Component {
   };
 
   confirmUpdate = data => {
+    this.toggleForm();
     this.props.updateData(this.props.id, data);
   };
 
   render() {
     return (
       <div className="EditableTimer ">
-        {this.props.isEditing ? (
+        {this.state.isEditing ? (
           <TimeForm
             {...this.props}
             statu="update"
