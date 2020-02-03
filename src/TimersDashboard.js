@@ -2,27 +2,48 @@ import React, { Component } from "react";
 import uuidv4 from "uuid/v4";
 import TimerCreator from "./TimerCreator";
 import EditableTimerList from "./EditableTimerList";
-import * as client from "./client";
+import * as apiClient from "./client/api";
+import * as dummyClient from "./client/dummy";
 
 /**
  * https://github.com/krishl/fullstack-react
  */
 export default class TimersDashboard extends Component {
-  serverUrl = "https://6b5bi.sse.codesandbox.io/api/timers";
-
   state = {
-    timers: []
+    timers: [],
+    client: dummyClient,
+    withApi: false
   };
 
   componentDidMount() {
-    setInterval(() => {
-      return client.getTimers(serverTimers => {
+    this.runLisiter();
+  }
+
+  switchClient = () => {
+    this.destroyLisiter();
+    this.setState(({ withApi }) => {
+      const nextClient = !withApi;
+      return {
+        client: nextClient ? apiClient : dummyClient,
+        withApi: nextClient
+      };
+    });
+    this.runLisiter();
+  };
+
+  runLisiter = () => {
+    this.intervalId = setTimeout(() => {
+      this.state.client.getTimers(serverTimers => {
         this.setState({
           timers: serverTimers
         });
       });
-    }, 1000);
-  }
+    }, 50);
+  };
+
+  destroyLisiter = () => {
+    clearTimeout(this.intervalId);
+  };
 
   getIndexById(id) {
     return this.state.timers.findIndex(el => el.id === id);
@@ -36,7 +57,7 @@ export default class TimersDashboard extends Component {
       ...data
     };
 
-    client.updateTimer(updatedTimer);
+    this.state.client.updateTimer(updatedTimer);
 
     this.setState({
       timers: [
@@ -50,7 +71,7 @@ export default class TimersDashboard extends Component {
   delete = id => {
     const index = this.getIndexById(id);
 
-    client.deleteTimer(id);
+    this.state.client.deleteTimer(id);
     this.setState({
       timers: [
         ...this.state.timers.slice(0, index),
@@ -70,7 +91,7 @@ export default class TimersDashboard extends Component {
       ...data
     };
 
-    client.createTimer(timer);
+    this.state.client.createTimer(timer);
 
     this.setState({
       timers: [...this.state.timers, timer]
@@ -78,7 +99,7 @@ export default class TimersDashboard extends Component {
   };
 
   start = id => {
-    client.startTimer(id);
+    this.state.client.startTimer(id);
     const index = this.getIndexById(id);
 
     this.setState({
@@ -94,7 +115,7 @@ export default class TimersDashboard extends Component {
     const index = this.getIndexById(id);
     const elapsedNow = new Date() - this.state.timers[index].runningSince;
 
-    client.stopTimer(id, elapsedNow);
+    this.state.client.stopTimer(id, elapsedNow);
 
     this.setState({
       timers: [
@@ -113,6 +134,9 @@ export default class TimersDashboard extends Component {
     return (
       <div className="TimersDashboard">
         <h1>Timers bashboard</h1>
+        <button className="btn" onClick={this.switchClient}>
+          Switch to {this.state.withApi ? "Dummy" : "API"} client
+        </button>
         <EditableTimerList
           timers={this.state.timers}
           updateData={this.update}

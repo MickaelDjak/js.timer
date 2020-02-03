@@ -1,4 +1,4 @@
-import URL from "./config";
+const URL = "https://6b5bi.sse.codesandbox.io/api/timers";
 
 function getTimers(hanlder) {
   return fetch(URL, {
@@ -45,7 +45,7 @@ function updateTimer(timer) {
   });
 }
 
-function stopTimer(timerId, elapsed) {
+function stopTimer(timerId) {
   return fetch(URL + "/stop", {
     method: "post",
     body: JSON.stringify({
